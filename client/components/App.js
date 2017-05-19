@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const request = require('superagent');
 // const CodeMirror = require('react-codemirror');
 // require('codemirror/lib/codemirror.css');
 
@@ -15,44 +16,51 @@ var defaults = {
 	javascript: 'function fizzBuzz() = {\n\n\n}'
 };
 
-var App = createReactClass({
-	getInitialState () {
-		return {
-			code: defaults.javascript,
-			readOnly: false,
-			mode: 'javascript',
-		};
-	},
-  sendCode(){
+class App extends Component {
+  constructor(){
+    super();
+    this.state ={
+      code: defaults.javascript,
+      readOnly: false,
+      mode: 'javascript',
+    }
 
-    alert(this.state.code);
-  //   request
-  // .post('/api/pet')
-  // .send({ name: 'Manny', species: 'cat' })
-  },
-	updateCode (newCode) {
-		this.setState({
-			code: newCode
-		});
-	},
+    this.sendCode = this.sendCode.bind(this);
 
-	render () {
-		var options = {
-			lineNumbers: true,
-			readOnly: this.state.readOnly,
-			mode: this.state.mode
-		};
-		return (
-			<div>
-        <form onSubmit={this.sendCode}>
-				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
-        <br/>
-        <input type="submit" value="submit" />
-        </form>
-      </div>
-		);
-	}
-});
+  }
+    sendCode(){
+      alert(this.state.code)
+      request.post('http://localHost3001/test').send({code: this.state.code}).end(function(err, res){
+        console.log(this.state.code);
+        alert('sent code')
+      });
+    }
+
+  	updateCode (newCode) {
+  		this.setState({
+  			code: newCode
+  		});
+  	}
+
+  	render () {
+  		var options = {
+  			lineNumbers: true,
+  			readOnly: this.state.readOnly,
+  			mode: this.state.mode
+  		};
+  		return (
+  			<div>
+          <form onSubmit={this.sendCode}>
+  				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
+          <br/>
+          <input type="submit" value="submit" />
+          </form>
+        </div>
+  		);
+  	}
+  };
+
+
 
 
 

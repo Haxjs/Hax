@@ -5,7 +5,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.join(__dirname, '/build'),
-    filename: 'webpack-bundle.js'
+    filename: '/webpack-bundle.js'
   },
   module: {
     rules: [
