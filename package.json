@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Mojo",
   "license": "ISC",
   "dependencies": {
+    "codemirror": "^5.25.2",
     "express": "^4.15.3"
   },
   "devDependencies": {
