@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const serverController = require('./serverController');
 
-app.get('/', (req, res) => {
-
-});
+app.use(express.static(__dirname +'/'));
+// app.get('/', (req, res) => {
+//
+// });
 
 app.post('/test', serverController.evaluateCode);
 
