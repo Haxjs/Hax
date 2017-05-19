@@ -17,7 +17,9 @@
     "webpack": "^2.5.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "codemirror": "^5.25.2"
+    
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
