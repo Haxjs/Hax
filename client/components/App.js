@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import render from 'react-dom';
 const request = require('superagent');
 // const CodeMirror = require('react-codemirror');
 // require('codemirror/lib/codemirror.css');
@@ -6,7 +7,6 @@ const request = require('superagent');
 // var React = require('react');
 // var ReactDOM = require('react-dom');
 var Codemirror = require('../src/Codemirror');
-const createReactClass = require('create-react-class');
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/xml/xml');
@@ -28,9 +28,21 @@ class App extends Component {
     this.sendCode = this.sendCode.bind(this);
 
   }
+
+  componentWillMount(){
+    console.log('componentWillMount')
+    fetch('http://localHost:3000/')
+      .then(response=> console.log('hello'));
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount')
+    fetch('http://localHost:3000/')
+      .then(response=> console.log('hello'));
+  }
     sendCode(){
       alert(this.state.code)
-      request.post('http://localHost3001/test').send({code: this.state.code}).end(function(err, res){
+      request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
         console.log(this.state.code);
         alert('sent code')
       });
