@@ -10,6 +10,9 @@
   "author": "Mojo",
   "license": "ISC",
   "dependencies": {
+    "pg": "^6.2.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.4",
     "body-parser": "^1.17.2",
     "deep-equal": "^1.0.1",
     "express": "^4.15.3",
@@ -19,7 +22,6 @@
     "react-dom": "^15.5.4",
     "webpack-dev-server": "^2.4.5",
     "codemirror": "^5.25.2"
-    
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
