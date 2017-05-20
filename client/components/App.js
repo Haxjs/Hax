@@ -13,7 +13,7 @@ require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
 var defaults = {
-	javascript: 'function fizzBuzz() = {\n\n\n}'
+	javascript: 'function fizzBuzz() {\n\n\n}'
 };
 
 class App extends Component {
