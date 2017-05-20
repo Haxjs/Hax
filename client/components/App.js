@@ -8,7 +8,6 @@ require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
-
 class App extends Component {
 	constructor() {
 		super();
@@ -25,21 +24,23 @@ class App extends Component {
 		console.log('initial mount....')
 		const that = this;
 
-		request.get('http://localHost:3000/init').end((err, res) => {
-			const resObj = JSON.parse(res.text);
-			that.setState(resObj)
-		});
+		request.get('http://localHost:3000/init')
+			.end((err, res) => {
+				const resObj = JSON.parse(res.text);
+				that.setState(resObj)
+			});
 	}
 
 	sendCode() {
 		console.log('sending client code...')
 
 		const that = this;
-		request.post('http://localHost:3000/test').send({ code: this.state.code }).end((err, res) => {
-
-			const resObj = JSON.parse(res.text);
-			that.setState({ results: resObj[0], details: resObj.slice(1, 100) })
-		});
+		request.post('http://localHost:3000/test')
+			.send({ code: this.state.code })
+			.end((err, res) => {
+				const resObj = JSON.parse(res.text);
+				that.setState({ results: resObj[0], details: resObj.slice(1, 100) })
+			});
 	}
 
 	updateCode(newCode) {
@@ -67,11 +68,6 @@ class App extends Component {
 			})
 		}
 
-		// ["test " + key]: tests[key][0],
-		// results: equal(clientFunc(tests[key][1]), tests[key][2]),
-		// expected: tests[key][2],
-		// got: clientFunc(tests[key][1])
-
 		return (
 			<div>
 				<h2>{this.state.name}</h2>
@@ -85,11 +81,5 @@ class App extends Component {
 		);
 	}
 };
-
-
-
-
-
-
 
 export default App;
