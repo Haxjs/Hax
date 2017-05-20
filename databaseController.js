@@ -82,11 +82,15 @@ function evaluateCode(codeBod) {
 
 
 const dataBaseController = {
+  //
+  // Hax.all().then(haxes => {
+  //   console.log('haxes.length',haxes.length);
+  // });
 
   getResults(req, res) {
     Hax.find({
       where: {
-        _id: 1
+        _id: 5
       }
     }).then(hax => {
       let data = hax.get();
@@ -147,7 +151,7 @@ const dataBaseController = {
     // FUNCTION TO ACCESS THE DB AND RETURN OUR STATE OBJECT
     Hax.find({
       where: {
-        _id: 1
+        _id: 5
       } // ID WILL BE RANDOMIZED
     }).then(hax => {
       let data = hax.get();
