@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const serverController = require('./serverController');
+const databaseController = require('./databaseController');
+
+const cors = require('cors');
+
 const bodyParser = require('body-parser');
 
 const options = {
@@ -8,18 +12,20 @@ const options = {
   limit: '100kb',
   type: 'application/octet-stream'
 };
-
+app.use(cors());
 // app.use(bodyParser.raw(options));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-// app.use(bodyParser.text());
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
 
-});
+app.use(express.static(__dirname +'/'));
 
-app.post('/test', serverController.evaluateCode);
+app.get('/',serverController.getHome)
+app.get('/init', serverController.getHome)
+
+app.post('/test', databaseController.getResults);
 
 app.listen(3000);
 console.log('Listening on http://localhost:3000');
