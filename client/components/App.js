@@ -48,7 +48,7 @@ class App extends Component {
     sendCode(){
 			const that = this;
 			console.log('in send code',	this.state.code);
-      request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
+      request.post('http://localHost:3000/test').send({code: this.state.code, id: this.state.id}).end(function(err, res){
         console.log(res.text);
 				const response = JSON.parse(res.text);
 				that.setState({results:response[0]})

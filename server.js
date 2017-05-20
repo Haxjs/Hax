@@ -22,8 +22,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname +'/'));
 
-app.get('/',serverController.getHome)
-app.get('/init', serverController.getHome)
+app.get('/', databaseController.getNewState)
+app.get('/init', databaseController.getNewState)
 
 app.post('/test', databaseController.getResults);
 
