@@ -35,9 +35,10 @@ function funcParse(clientFunc) {
   // console.log('args', args);
   // console.log('bodyStart', bodyStart);
   // console.log('bodyStart', bodyEnd);
-  // console.log('funcparsebody', body);
+  console.log('funcparsebody', body);
 
-  x = new Function(`num`, `var retArr = [];for(var i = 1; i <= num; i++){if( !(i % 15) ) retArr.push("fizzbuzz");else if(!(i % 3)) retArr.push("fizz");else if(!(i % 5)) retArr.push("buzz");else(retArr.push(i));}return retArr;`);
+  x = new Function(args, body);
+  // x = new Function(`num`, `var retArr = [];for(var i = 1; i <= num; i++){if( !(i % 15) ) retArr.push("fizzbuzz");else if(!(i % 3)) retArr.push("fizz");else if(!(i % 5)) retArr.push("buzz");else(retArr.push(i));}return retArr;`);
   // console.log('x =====',x(15))
   return x;
 }
@@ -45,9 +46,16 @@ function funcParse(clientFunc) {
 function evaluateCode(codeBod) {
 
   // let overallResults = true
+  // console.log('codeBod', codeBod, typeof codeBod)
+  function replaceSingleQuotes (rawInput){
+    return rawInput.replace(/'/g, '"');
+  }
+  replaceSingleQuotes(codeBod);
 
   const testResults = [true];
   const clientFunc = funcParse(codeBod);
+
+
   // console.log('this is clientFunc', clientFunc);
   // console.log('testing:',  clientFunc(1))
 
@@ -117,7 +125,7 @@ const dataBaseController = {
 
   getNewState(req, res) {
 
-    console.log('get new state');
+    // console.log('get new state');
     // ADD HACKS TO THE DB - MOVE TO A SEPARATE JS FILE
 
     // let problem = 'Write a function that returns an array containing the numbers 1 to NUM. Put fizz in place of numbers divisble by 3, buzz in place of numbers divisble by 5, and fizzbuzz in place of numbers divisble by both 3 and 5. fizzbuzz(16);  -> [ 1, 2, fizz, 4, buzz, fizz, 7, 8, fizz, buzz, 11, fizz, 13, 14, fizzbuzz, 16 ]'
