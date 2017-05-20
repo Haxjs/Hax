@@ -3,12 +3,6 @@ const app = express();
 const serverController = require('./serverController');
 const bodyParser = require('body-parser');
 
-const options = {
-  inflate: true,
-  limit: '100kb',
-  type: 'application/octet-stream'
-};
-
 // app.use(bodyParser.raw(options));
 app.use(bodyParser.urlencoded({
   extended: true
