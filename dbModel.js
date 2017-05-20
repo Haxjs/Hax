@@ -26,18 +26,42 @@ const Hax = sequelize.define('hax', {
 
 // ADD HACKS TO THE DB - MOVE TO A SEPARATE JS FILE
 
-let problem = 'Write a function that returns an array containing the numbers 1 to NUM. Put fizz in place of numbers divisble by 3, buzz in place of numbers divisble by 5, and fizzbuzz in place of numbers divisble by both 3 and 5. fizzbuzz(16);  -> [ 1, 2, fizz, 4, buzz, fizz, 7, 8, fizz, buzz, 11, fizz, 13, 14, fizzbuzz, 16 ]'
+// let problem = 'Given an array of integers, find the highest product you can get from three of the integers.'
+//
+// Hax.sync().then(() => {
+//  return Hax.create({
+//   name: 'Highest Product',
+//   problem: problem,
+//   tests: {
+//         0: ['should return 0 if input is invalid', [1], 0],
+//         1: ['should return the highest product', [1, 2, 3, 4, 5], 60],
+//         2: ['should work with negative numbers in the mix', [-5, 3, 1, -4, 5], 100],
+//         3: ['should work for large arrays', [7, -10, 0, 4, 2, 1, -7, 8, 5, 2, 11, 23], 2024],
+//       }
+//  });
+// });
 
-Hax.sync().then(() => {
- return Hax.create({
-   name: 'fizzBuzz',
-   problem: problem,
-   tests: {
-      0: ['should return empty array if 0 passed in...', 0, []],
-      1: ['should work for multiple of 3 ....', 9, [1, 2, 'fizz', 4, 'buzz', 'fizz', 7, 8, 'fizz']],
-      2: ['should work for multiple of 5 & 3', 15, [1, 2, 'fizz', 4, 'buzz', 'fizz', 7, 8, 'fizz', 'buzz', 11, 'fizz', 13, 14, 'fizzbuzz']],
-      3: ['should work for multiple of 5', 5, [1, 2, 'fizz', 4, 'buzz']],
-      4: ['should work for number not divisble by 3 or 5...', 7, [1, 2, 'fizz', 4, 'buzz', 'fizz', 7]]
-    }
- });
-});
+// Hax.find({ where: { name: 'Highest Product' } })
+//   .on('success', function (record) {
+//     // Check if record exists in db
+//     if (record) {
+//       record.updateAttributes({
+//         tests: {
+//               0: ['should return 0 if input is invalid', [1], 0],
+//               1: ['should return the highest product', [1, 2, 3, 4, 5], 60],
+//               2: ['should work with negative numbers in the mix', [-5, 3, 1, -4, 5], 100],
+//               3: ['should work for large arrays', [7, -10, 0, 4, 2, 1, -7, 8, 5, 2, 11, 23], 2024],
+//             }
+//       })
+//       .success(function () {})
+//     }
+//   })
+
+// name: 'Highest Product',
+// problem: 'Given an array of integers, find the highest product you can get from three of the integers.',
+// tests: {
+//       0: ['should return 0 if input is invalid', '[1]', 0],
+//       1: ['should return the highest product', [1, 2, 3, 4, 5], 60],
+//       2: ['should work with negative numbers in the mix', [-5, 3, 1, -4, 5], 100],
+//       3: ['should work for large arrays', [7, -10, 0, 4, 2, 1, -7, 8, 5, 2, 11, 23], 2024],
+//     }

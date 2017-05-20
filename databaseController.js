@@ -50,8 +50,9 @@ function funcParse(codeBod) {
 }
 
 const dataBaseController = {
-
+  
   getResults(req, res) {
+
     console.log('getting results.....')
 
     Hax.find({ where: { _id: 1 } })
