@@ -26,6 +26,7 @@ app.get('/', databaseController.getNewState)
 app.get('/init', databaseController.getNewState)
 
 app.post('/test', databaseController.getResults);
+app.post('/select', databaseController.selectState);
 
 app.listen(3000);
 console.log('Listening on http://localhost:3000');

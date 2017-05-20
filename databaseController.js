@@ -114,6 +114,28 @@ const dataBaseController = {
 
        res.send(JSON.stringify(state));
     });
+  },
+
+  selectState(req, res) {
+    console.log('selecting new State')
+    // FUNCTION TO ACCESS THE DB AND RETURN OUR STATE OBJECT
+    let random = req.body.id;
+    console.log(random);
+    Hax.find({
+      where: {
+        _id: random
+      }
+    }).then(hax => {
+      let data = hax.get();
+      let state = {
+        name: data.name,
+        problem: data.problem,
+        id: data._id
+      }
+      res.setHeader('Content-Type', 'application/json');
+
+       res.send(JSON.stringify(state));
+    });
   }
 }
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import render from 'react-dom';
-// import 'react-select/dist/react-select.css';
-
+import 'react-select/dist/react-select.css'
 const request = require('superagent');
 const Codemirror = require('../src/Codemirror');
+const Select = require('react-select');
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/xml/xml');
@@ -23,6 +23,7 @@ class App extends Component {
     }
     this.sendCode = this.sendCode.bind(this);
 		this.updateCode = this.updateCode.bind(this);
+		this.logChange = this.logChange.bind(this);
   }
 
   componentWillMount(){
@@ -33,13 +34,6 @@ class App extends Component {
 			console.log('that state', that.state);
 		});
   }
-
-  // componentDidMount(){
-  //   console.log('componentDidMount')
-	// 	request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
-	// 		console.log(this.state);
-	// 	});
-  // }
 
     sendCode(){
 			const that = this;
@@ -56,6 +50,15 @@ class App extends Component {
   		this.state.code = newCode;
   	}
 
+	 	logChange(val){
+			const that = this;
+			console.log('the selected val = ',val.value);
+			request.post('http://localHost:3000/select').send({id: val.value}).end(function(err, res){
+				const firstState = JSON.parse(res.text);
+				that.setState(firstState)
+		})
+	}
+
   	render () {
 
 			console.log('render', this.state.details);
@@ -65,10 +68,13 @@ class App extends Component {
   			mode: this.state.mode
   		};
 
-			// const options = [
-			// 	{}
-			// ]
-			//
+			const thisOpts = [
+				{value: 1 , label: 'fizzbuzz'},
+				{value: 2 , label: 'binary to decimal'},
+				{value: 3 , label: 'match words'},
+				{value: 4 , label: 'highest product'},
+			];
+
 			let details;
 
 			if (this.state.details) {
@@ -86,6 +92,7 @@ class App extends Component {
 
   		return (
   			<div>
+					<Select name="whateva" value="one" options = {thisOpts} onChange = {this.logChange}/>
 					<h2>{this.state.name}</h2>
 					<h4>{this.state.problem}</h4>
   				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
