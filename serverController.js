@@ -1,10 +1,13 @@
 const fakeDb = require('./fakeDb');
 const equal = require('deep-equal');
+const databaseCtrl = require('./databaseController');
 
 const serverController = {
 
-  getHome(){
-    console.log('home');
+  getHome(req,res){
+    databaseCtrl.getNewState(req,res);
+    // console.log('problem', problem)
+    // return res.send(problem);
   },
 
   funcParse(clientFunc) {
@@ -32,18 +35,18 @@ const serverController = {
     console.log(clientFunc);
     console.log('testing:',  clientFunc(1,2))
 
-    // Object.keys(testCases).forEach(key => {
+    Object.keys(testCases).forEach(key => {
 
-    //   testResults.push({
-    //     ["test " + key]: testCases[key][0],
-    //     results: equal(clientFunc(...testCases[key][1]), testCases[key][2]),
-    //     expected: JSON.stringify(testCases[key][2]),
-    //     got: JSON.stringify(clientFunc(testCases[key][1]))
-    //   });
+      testResults.push({
+        ["test " + key]: testCases[key][0],
+        results: equal(clientFunc(...testCases[key][1]), testCases[key][2]),
+        expected: JSON.stringify(testCases[key][2]),
+        got: JSON.stringify(clientFunc(testCases[key][1]))
+      });
 
-    //   testResults[0] = (testResults[0] && equal(clientFunc(testCases[key][1]), testCases[key][2]) );
+      testResults[0] = (testResults[0] && equal(clientFunc(testCases[key][1]), testCases[key][2]) );
 
-    // })
+    })
 
     res.json();
 

@@ -21,8 +21,9 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname +'/'));
 
 app.get('/',serverController.getHome)
+app.get('/init', serverController.getHome)
 
-app.post('/test', serverController.getHome);
+app.post('/test', serverController.evaluateCode);
 
 app.listen(3000);
 console.log('Listening on http://localhost:3000');
