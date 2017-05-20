@@ -13,7 +13,6 @@ const options = {
   type: 'application/octet-stream'
 };
 app.use(cors());
-// app.use(bodyParser.raw(options));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
