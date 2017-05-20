@@ -1,18 +1,3 @@
-const fakeDb = require('./fakeDb');
-const equal = require('deep-equal');
-const databaseCtrl = require('./databaseController');
-
-const serverController = {
-
-  getHome(req,res){
-    databaseCtrl.getNewState(req,res);
-    // console.log('problem', problem)
-    // return res.send(problem);
-  },
-};
-
-module.exports = serverController;
-
 // clientFunc = `function pow(base, power) {
 
 // 	return power === 1 ? base : base * pow(base,power - 1);

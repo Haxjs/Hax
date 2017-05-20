@@ -1,30 +1,20 @@
 const express = require('express');
 const app = express();
-const serverController = require('./serverController');
 const databaseController = require('./databaseController');
-
 const cors = require('cors');
-
 const bodyParser = require('body-parser');
 
-const options = {
-  inflate: true,
-  limit: '100kb',
-  type: 'application/octet-stream'
-};
 app.use(cors());
-// app.use(bodyParser.raw(options));
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
 
-
 app.use(express.static(__dirname +'/'));
 
-app.get('/',serverController.getHome)
-app.get('/init', serverController.getHome)
-
+app.get('/', databaseController.getNewState)
+app.get('/init', databaseController.getNewState)
 app.post('/test', databaseController.getResults);
 
 app.listen(3000);

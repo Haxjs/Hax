@@ -1,89 +1,85 @@
 import React, { Component } from 'react';
 import render from 'react-dom';
 const request = require('superagent');
-// const CodeMirror = require('react-codemirror');
-// require('codemirror/lib/codemirror.css');
 
-// var React = require('react');
-// var ReactDOM = require('react-dom');
-var Codemirror = require('../src/Codemirror');
+const Codemirror = require('../src/Codemirror');
 
 require('codemirror/mode/javascript/javascript');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
-var defaults = {
-	javascript: 'function fizzBuzz() {\n\n\n}'
-};
-
 class App extends Component {
-  constructor(){
-    super();
-    this.state ={
-      code: defaults.javascript,
-      readOnly: false,
-      mode: 'javascript',
-    }
-    this.sendCode = this.sendCode.bind(this);
+	constructor() {
+		super();
+		this.state = {
+			code: { javascript: 'function fizzBuzz() {\n\n\n}' },
+			readOnly: false,
+			mode: 'javascript',
+		}
+		this.sendCode = this.sendCode.bind(this);
 		this.updateCode = this.updateCode.bind(this);
-  }
+	}
 
-  componentWillMount(){
+	componentWillMount() {
+		console.log('initial mount....')
 		const that = this;
-		request.get('http://localHost:3000/init').end(function(err, res){
-			const firstState = JSON.parse(res.text);
-			console.log('this', that)
-			that.setState(firstState)
-			console.log('that state', that.state);
-		});
-  }
 
-  // componentDidMount(){
-  //   console.log('componentDidMount')
-	// 	request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
-	// 		console.log(this.state);
-	// 	});
-  // }
+		request.get('http://localHost:3000/init')
+			.end((err, res) => {
+				const resObj = JSON.parse(res.text);
+				that.setState(resObj)
+			});
+	}
 
-    sendCode(){
-			const that = this;
-			console.log('in send code',	this.state.code);
-      request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
-        console.log(res.text);
-				const response = JSON.parse(res.text);
-				that.setState({results:response[0]})
-				console.log(that.state.results);
-      });
-    }
+	sendCode() {
+		console.log('sending client code...')
 
-  	updateCode (newCode) {
-  		this.state.code = newCode;
-  	}
+		const that = this;
+		request.post('http://localHost:3000/test')
+			.send({ code: this.state.code })
+			.end((err, res) => {
+				const resObj = JSON.parse(res.text);
+				that.setState({ results: resObj[0], details: resObj.slice(1, 100) })
+			});
+	}
 
-  	render () {
-  		var options = {
-  			lineNumbers: true,
-  			// readOnly: this.state.readOnly,
-  			mode: this.state.mode
-  		};
+	updateCode(newCode) {
+		this.state.code = newCode;
+	}
 
-  		return (
-  			<div>
-					<h2>{this.state.name}</h2>
-					<h3>{this.state.problem}</h3>
-  				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
-          <br/>
-          <input type="submit" value="submit" onClick={this.sendCode}/>
-					<h3>{JSON.stringify(this.state.results)}</h3>
-        </div>
-  		);
-  	}
-  };
+	render() {
+		const mirrorOptions = {
+			lineNumbers: true,
+			// readOnly: this.state.readOnly,
+			mode: this.state.mode
+		};
 
+		let details;
 
+		if (this.state.details) {
+			details = this.state.details.map((item, index) => {
+				return (
+					<div>
+						<h3> {'test ' + index + ':' + item[index]}</h3>
+						<p> {'expected: ' + item.expected} </p>
+						<p> {'results: ' + item.got} </p>
+					</div>
+				)
+			})
+		}
 
-
-
-
+		return (
+			<div>
+				<h2>{this.state.name}</h2>
+				<h3>{this.state.problem}</h3>
+				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
+				<br />
+				<input type="submit" value="submit" onClick={this.sendCode} />
+				<h3>{JSON.stringify(this.state.results)}</h3>
+				<h2> {details} </h2>
+			</div>
+		);
+	}
+};
 
 export default App;
