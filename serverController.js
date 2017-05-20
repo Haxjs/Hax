@@ -9,48 +9,6 @@ const serverController = {
     // console.log('problem', problem)
     // return res.send(problem);
   },
-
-  funcParse(clientFunc) {
-
-    const argStart = clientFunc.indexOf('(') + 1;
-    const argEnd = clientFunc.indexOf(')');
-    const args = clientFunc.substr(argStart, argEnd - argStart);
-
-    const bodyStart = clientFunc.indexOf('{') + 1;
-    const bodyEnd = clientFunc.lastIndexOf('}');
-    const body = clientFunc.substr(bodyStart, bodyEnd - bodyStart);
-    console.log(body);
-
-    return new Function(args, body);
-
-  },
-
-  evaluateCode(req, res) {
-
-    // let overallResults = true
-
-    const testResults = [true];
-    const clientFunc = serverController.funcParse(req.body.full);
-    const testCases = fakeDb[req.body.funcId].testCases;
-    console.log(clientFunc);
-    console.log('testing:',  clientFunc(1,2))
-
-    Object.keys(testCases).forEach(key => {
-
-      testResults.push({
-        ["test " + key]: testCases[key][0],
-        results: equal(clientFunc(...testCases[key][1]), testCases[key][2]),
-        expected: JSON.stringify(testCases[key][2]),
-        got: JSON.stringify(clientFunc(testCases[key][1]))
-      });
-
-      testResults[0] = (testResults[0] && equal(clientFunc(testCases[key][1]), testCases[key][2]) );
-
-    })
-
-    res.json();
-
-  }
 };
 
 module.exports = serverController;

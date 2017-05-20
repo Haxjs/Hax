@@ -44,11 +44,15 @@ class App extends Component {
 	// 		console.log(this.state);
 	// 	});
   // }
-	
+
     sendCode(){
+			const that = this;
 			console.log('in send code',	this.state.code);
       request.post('http://localHost:3000/test').send({code: this.state.code}).end(function(err, res){
-        console.log(this.state);
+        console.log(res.text);
+				const response = JSON.parse(res.text);
+				that.setState({results:response[0]})
+				console.log(that.state.results);
       });
     }
 
@@ -70,7 +74,7 @@ class App extends Component {
   				<Codemirror ref="editor" value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} />
           <br/>
           <input type="submit" value="submit" onClick={this.sendCode}/>
-					<h3>{this.state.result}</h3>
+					<h3>{JSON.stringify(this.state.results)}</h3>
         </div>
   		);
   	}

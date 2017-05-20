@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const serverController = require('./serverController');
+const databaseController = require('./databaseController');
 
 const cors = require('cors');
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(bodyParser.json());
 
 
 app.use(express.static(__dirname +'/'));
@@ -23,7 +25,7 @@ app.use(express.static(__dirname +'/'));
 app.get('/',serverController.getHome)
 app.get('/init', serverController.getHome)
 
-app.post('/test', serverController.evaluateCode);
+app.post('/test', databaseController.getResults);
 
 app.listen(3000);
 console.log('Listening on http://localhost:3000');
