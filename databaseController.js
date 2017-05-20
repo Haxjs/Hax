@@ -25,16 +25,28 @@ const Hax = sequelize.define('hax', {
 
 function funcParse(codeBod) {
 
-  const argStart = clientFunc.indexOf('(') + 1;
-  const argEnd = clientFunc.indexOf(')');
-  const args = clientFunc.substr(argStart, argEnd - argStart);
+  function replaceSingleQuotes(rawInput) {
+    return rawInput.replace(/'/g, '"');
+  }
 
-  const bodyStart = clientFunc.indexOf('{') + 1;
-  const bodyEnd = clientFunc.lastIndexOf('}');
-  const body = clientFunc.substr(bodyStart, bodyEnd - bodyStart);
+  codeBod = replaceSingleQuotes(codeBod);
 
-  return new Function(`num`, `var retArr = [];for(var i = 1; i <= num; i++){if( !(i % 15) ) retArr.push("fizzbuzz");else if(!(i % 3)) retArr.push("fizz");else if(!(i % 5)) retArr.push("buzz");else(retArr.push(i));}return retArr;`);
+  const argStart = codeBod.indexOf('(') + 1;
+  const argEnd = codeBod.indexOf(')');
+  const args = codeBod.substr(argStart, argEnd - argStart);
 
+  const bodyStart = codeBod.indexOf('{') + 1;
+  const bodyEnd = codeBod.lastIndexOf('}');
+  const body = codeBod.substr(bodyStart, bodyEnd - bodyStart);
+
+  try{
+    return new Function(`num`, `var retArr = [];for(var i = 1; i <= num; i++){if( !(i % 15) ) retArr.push("fizzbuzz");else if(!(i % 3)) retArr.push("fizz");else if(!(i % 5)) retArr.push("buzz");else(retArr.push(i));}return retArr;`);
+  }
+  catch(err){
+    console.log('function didnt parse properly');
+    res.end();
+  }
+ 
 }
 
 const dataBaseController = {
@@ -71,8 +83,8 @@ const dataBaseController = {
 
     Hax.find({ where: { _id: 1 } })
       .then(hax => {
-        let data = hax.get();
-        let state = { name: data.name, problem: data.problem }
+        const data = hax.get();
+        const state = { name: data.name, problem: data.problem }
         res.setHeader('Content-Type', 'application/json');
         res.json(state);
       });
