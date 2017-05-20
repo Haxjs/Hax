@@ -5,8 +5,8 @@ import render from 'react-dom';
 export default class App extends React.Component {
   render() {
     return (
-     <div>              
-        hello worlds
+     <div>
+       hello world
       </div>);
   }
 }
