@@ -52,7 +52,7 @@ function funcParse(rawInput) {
 const dataBaseController = {
 
   getResults(req, res) {
-    console.log('getting results')
+    console.log('getting results...')
     console.log(req.body.id);
     Hax.find({
       where: {
@@ -63,6 +63,14 @@ const dataBaseController = {
       let tests = data.tests;
 
       let clientFunc = funcParse(req.body.code);
+
+        try {
+          clientFunc(tests[0][1])
+        }
+        catch(err) {
+          console.log('inputted function is not a proper function')
+          return res.send(JSON.stringify(['Please send proper input!']));
+        }
 
       const testResults = [true];
 
@@ -94,7 +102,7 @@ const dataBaseController = {
     Hax.find({
       where: {
         _id: random
-      } // ID WILL BE RANDOMIZED
+      }
     }).then(hax => {
       let data = hax.get();
       let state = {
